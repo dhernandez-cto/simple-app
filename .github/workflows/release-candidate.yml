@@ -50,8 +50,9 @@ jobs:
           git push
 
       - name: listing tags for debuging
-        run: echo $(git tag -l "${{steps.project-new-version.outputs.newversion}}-RC-*")
-        
+        run: |
+          tags=$(git tag -l "${{steps.project-new-version.outputs.newversion}}-RC-*")
+          echo $tags
       - name: Retrieve next RC number
         id: next-rc-numbner
         uses: belcebus/git-tags-action@main
