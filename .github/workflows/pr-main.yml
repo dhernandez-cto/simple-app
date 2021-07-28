@@ -38,4 +38,4 @@ jobs:
       - name: commiting pom.xml
         run: |
           git commit -am 'removing pom'
-          git push
+          git push --set-upstream origin develop
