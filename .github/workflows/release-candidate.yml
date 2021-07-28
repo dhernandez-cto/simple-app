@@ -40,10 +40,17 @@ jobs:
         
       - name: commiting pom.xml
         run: |
-          git config --global user.email "you@example.com"
-          git config --global user.name "Your Name"
-          git commit -am 'removing SNAPSHOT pom'
+          git config --global user.email "ALMNextGen@noreply.com"
+          git config --global user.name "GitHub Actions"
+          git commit -am '[GitHub Actions] removing SNAPSHOT from pom'
           git push
+      
+      - name: get last commit sha
+        id: sha
+        run: |
+          sha_new=$(git rev-parse HEAD)
+          echo $sha_new
+          echo "::set-output name=SHA::$sha_new"
 
   bump-dev-version:
     name: Bumping next development version
