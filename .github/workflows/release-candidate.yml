@@ -44,11 +44,14 @@ jobs:
         
       - name: commiting pom.xml
         run: |
-          git config --global user.email "ALMNextGen@noreply.com"
-          git config --global user.name "GitHub Actions"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git commit -am '[GitHub Actions] removing -SNAPSHOT from pom.xml'
           git push
 
+      - name: listing tags for debuging
+        run: git tag -l "${{steps.project-new-version.outputs.newversion}}-RC-*"
+        
       - name: Retrieve next RC number
         id: next-rc-numbner
         uses: belcebus/git-tags-action@main
