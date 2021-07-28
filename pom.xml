@@ -12,7 +12,7 @@
   <description>A simple springboot application</description>
 
   <scm>
-    <developerConnection>scm:git:git://github.com/belcebus/simple-app</developerConnection>
+    <developerConnection>scm:git:ssh://github.com/belcebus/simple-app</developerConnection>
   </scm>
   
   <properties>
