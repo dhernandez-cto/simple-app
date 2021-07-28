@@ -21,16 +21,18 @@ jobs:
           echo $GITHUB_REF
           echo ${GITHUB_SHA}
           echo $GITHUB_SHA
+
+      - name: modifing pom.xml
+        run: |
+          cat pom.xml | grep "<version>1"
+          sed -i -e 's/-SNAPSHOT//g' pom.xml
+          cat pom.xml | grep "<version>1"
+
       - name: preparing branch
         run: |
           git config --global user.name 'actions'
           git config --global user.email 'actions@users.noreply.github.com'
           git switch -c temp
-      
-      - name: modifing pom.xml
-        run: |
-          cat pom.xml | grep "<version>1"
-          sed -i -e 's/-SNAPSHOT//g' pom.xml
           cat pom.xml | grep "<version>1"
       
       - name: commiting pom.xml
