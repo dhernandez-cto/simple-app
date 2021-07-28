@@ -16,9 +16,10 @@ jobs:
       
       - name: Where am I?
         run: | 
-          echo ${{GITHUB_REF}}
+          env
+          echo ${GITHUB_REF}
           echo $GITHUB_REF
-          echo ${{GITHUB_SHA}}
+          echo ${GITHUB_SHA}
           echo $GITHUB_SHA
 
   
