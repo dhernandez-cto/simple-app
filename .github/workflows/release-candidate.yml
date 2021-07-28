@@ -53,7 +53,7 @@ jobs:
         id: next-rc-numbner
         uses: belcebus/git-tags-action@main
         with:
-          version: "${{steps.project-new-version.outputs.newversion}}-RC"
+          version: ${{steps.project-new-version.outputs.newversion}}
       
       - name: Display next release candidate version
         run: echo ${{steps.next-rc-numbner.outputs.next-rc-number}}
