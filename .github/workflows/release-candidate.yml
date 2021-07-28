@@ -13,22 +13,21 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-      
-      - name: Where am I?
-        run: | 
-          env
-          echo ${GITHUB_REF}
-          echo $GITHUB_REF
-          echo ${GITHUB_SHA}
-          echo $GITHUB_SHA
-          cat $GITHUB_EVENT_PATH 
 
+      - name: Extract Maven project version
+        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        id: project-version
+
+      - name: Calculating new version
+        id: project-new-version
+        run: echo ::set-output name=newversion::$(sed -e 's/-SNAPSHOT//g' <<< ${{steps.project-version.outputs.version}})
+          
       - name: removing snapshot pom.xml
         run: |
-          cat pom.xml | grep "<version>1"
-          sed -i -e 's/-SNAPSHOT//g' pom.xml
-          cat pom.xml | grep "<version>1"
-
+          echo "${{steps.project-new-version.outputs.newversion}}"
+          mvn version:set -DnewVersion=${{steps.project-new-version.outputs.newversion}} -DgenerateBackupPoms=false -q
+          cat pom.xml | grep ${{steps.project-new-version.outputs.newversion}}
+        
       - name: commiting pom.xml
         run: |
           git config --global user.email "you@example.com"
