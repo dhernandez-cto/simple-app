@@ -44,6 +44,7 @@ jobs:
           git push origin HEAD:develop
       
   app-test:
+    needs: prepare-pom
     name: testing things
     runs-on: ubuntu-latest
     steps:
