@@ -21,7 +21,10 @@ jobs:
           echo $GITHUB_REF
           echo ${GITHUB_SHA}
           echo $GITHUB_SHA
-          sed -i -e 's/-SNAPSHOT//g' pom.xml
-          git add pom.xml
-          git commit -m 'removing pom'
+      - name: modifing pom.xml
+        run: sed -i -e 's/-SNAPSHOT//g' pom.xml
+      - name: commiting pom.xml
+          git config --global user.name 'actions'
+          git config --global user.email 'actions@users.noreply.github.com'
+          git commit -am 'removing pom'
           git push
