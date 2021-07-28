@@ -42,3 +42,13 @@ jobs:
         run: |
           git commit -am 'removing pom'
           git push origin HEAD:develop
+      
+  app-test:
+    name: testing things
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: verifying pom version
+        run: cat pom.xml | grep "<version>1"
+      
