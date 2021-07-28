@@ -34,5 +34,6 @@ jobs:
           cat pom.xml | grep "<version>1"
       
       - name: commiting pom.xml
+        run: |
           git commit -am 'removing pom'
           git push
