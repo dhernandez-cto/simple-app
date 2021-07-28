@@ -1,0 +1,24 @@
+name: Creating Release Candidate
+
+on:
+  pull-request:
+    branches:
+      - 'main'
+
+jobs:
+
+  prepare-pom:
+    name: 
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Where am I?
+        run: | 
+          echo ${{GITHUB_REF}}
+          echo $GITHUB_REF
+          echo ${{GITHUB_SHA}}
+          echo $GITHUB_SHA
+
+  
