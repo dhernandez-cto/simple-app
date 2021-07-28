@@ -15,17 +15,25 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Extract Maven project version
-        run: echo ::set-output name=version::$(mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
+        run: echo ::set-output name=version::$(mvnw -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
         id: project-version
+
+      - name: Display current version
+        run: echo ${{steps.project-version.outputs.version}}
 
       - name: Calculating new version
         id: project-new-version
         run: echo ::set-output name=newversion::$(sed -e 's/-SNAPSHOT//g' <<< ${{steps.project-version.outputs.version}})
-          
+
+      - name: Display new version
+        run: echo ${{steps.project-new-version.outputs.newversion}} 
+
       - name: removing snapshot pom.xml
+        run: mvnw versions:set -DnewVersion=${{steps.project-new-version.outputs.newversion}} -DgenerateBackupPoms=false -q
+      
+      - name: Display version from pom.xml
         run: |
-          echo "${{steps.project-new-version.outputs.newversion}}"
-          mvn version:set -DnewVersion=${{steps.project-new-version.outputs.newversion}} -DgenerateBackupPoms=false -q
+          mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
           cat pom.xml | grep ${{steps.project-new-version.outputs.newversion}}
         
       - name: commiting pom.xml
