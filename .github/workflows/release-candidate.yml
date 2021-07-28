@@ -99,9 +99,10 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               ref: "refs/tags/${{ needs.prepare-pom.outputs.new_version }}-RC-${{ needs.prepare-pom.outputs.next_rc_number }}",
-              sha: ${{ needs.prepare-pom.outputs.new_sha }}
+              sha: "${{ needs.prepare-pom.outputs.new_sha }}"
             })
-            
+
+#context.sha
   build:
     needs: prepare-pom
     runs-on: ubuntu-latest
