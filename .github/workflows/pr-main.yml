@@ -32,7 +32,7 @@ jobs:
         run: |
           git config --global user.name 'actions'
           git config --global user.email 'actions@users.noreply.github.com'
-          git switch -c temp
+          git switch -c develop
           cat pom.xml | grep "<version>1"
       
       - name: commiting pom.xml
