@@ -47,12 +47,7 @@ jobs:
           git commit -am '[GitHub Actions] removing -SNAPSHOT from pom.xml'
           git push
 
-      - name: Listing tags for debuging
-        run: |
-          tags=$(git tag -l "${{steps.project-new-version.outputs.newversion}}-RC-*")
-          echo $tags
-
-      - name: Retrieve next RC number
+      - name: Retrieving next RC number
         id: next-rc-numbner
         uses: belcebus/git-tags-action@main
         with:
