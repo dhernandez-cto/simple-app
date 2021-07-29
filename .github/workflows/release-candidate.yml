@@ -91,7 +91,7 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{ needs.prepare-pom.outputs.new_tag }},
+              ref: "refs/tags/${{ needs.prepare-pom.outputs.new_tag }}",
               sha: "${{ needs.prepare-pom.outputs.new_sha }}"
             })
 
