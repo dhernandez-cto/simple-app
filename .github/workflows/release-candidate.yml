@@ -13,7 +13,7 @@ jobs:
       new_sha: ${{ steps.sha.outputs.SHA }}
       new_version: ${{ steps.project-new-version.outputs.newversion }}
       next_rc_number: ${{steps.next-rc-number.outputs.next-tag-number}}
-      new_tag: ${{step.next-rc-number.outputs.new-tag}}
+      new_tag: ${{steps.next-rc-number.outputs.new-tag}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
