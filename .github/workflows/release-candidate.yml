@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - 'main'
-  workflow_dispatch:
-    branches:
-      - 'main'
 jobs:
 
   prepare-pom:
@@ -44,27 +41,28 @@ jobs:
           mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
           cat pom.xml | grep ${{steps.project-new-version.outputs.newversion}}
         
-      - name: commiting pom.xml
+      - name: Commiting pom.xml
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
           git commit -am '[GitHub Actions] removing -SNAPSHOT from pom.xml'
           git push
 
-      - name: listing tags for debuging
+      - name: Listing tags for debuging
         run: |
           tags=$(git tag -l "${{steps.project-new-version.outputs.newversion}}-RC-*")
           echo $tags
+
       - name: Retrieve next RC number
         id: next-rc-numbner
         uses: belcebus/git-tags-action@main
         with:
-          version: ${{steps.project-new-version.outputs.newversion}}
+          version: ${{steps.project-new-version.outputs.newversion}}-RC-
       
       - name: Display next release candidate version
         run: echo ${{steps.next-rc-numbner.outputs.next-rc-number}}
 
-      - name: get last commit sha
+      - name: Get last commit sha
         id: sha
         run: |
           sha_new=$(git rev-parse HEAD)
