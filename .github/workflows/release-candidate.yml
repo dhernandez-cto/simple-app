@@ -12,7 +12,8 @@ jobs:
     outputs:
       new_sha: ${{ steps.sha.outputs.SHA }}
       new_version: ${{ steps.project-new-version.outputs.newversion }}
-      next_rc_number: ${{steps.next-rc-numbner.outputs.next-tag-number}}
+      next_rc_number: ${{steps.next-rc-number.outputs.next-tag-number}}
+      new_tag: ${{step.next-rc-number.outputs.new-tag}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -48,13 +49,13 @@ jobs:
           git push
 
       - name: Retrieving next RC number
-        id: next-rc-numbner
+        id: next-rc-number
         uses: belcebus/git-tags-action@main
         with:
           version: ${{steps.project-new-version.outputs.newversion}}-RC
       
       - name: Display next release candidate version
-        run: echo ${{steps.next-rc-numbner.outputs.next-tag-number}}
+        run: echo ${{steps.next-rc-number.outputs.new-tag}}
 
       - name: Get last commit sha
         id: sha
@@ -90,7 +91,7 @@ jobs:
             github.git.createRef({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              ref: "refs/tags/${{ needs.prepare-pom.outputs.new_version }}-RC-${{ needs.prepare-pom.outputs.next_rc_number }}",
+              ref: "refs/tags/${{ needs.prepare-pom.outputs.new_tag }},
               sha: "${{ needs.prepare-pom.outputs.new_sha }}"
             })
 
