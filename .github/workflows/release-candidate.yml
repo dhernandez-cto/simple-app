@@ -12,7 +12,7 @@ jobs:
     outputs:
       new_sha: ${{ steps.sha.outputs.SHA }}
       new_version: ${{ steps.project-new-version.outputs.newversion }}
-      next_rc_number: ${{steps.next-rc-numbner.outputs.next-rc-number}}
+      next_rc_number: ${{steps.next-rc-numbner.outputs.next-tag-number}}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -61,7 +61,7 @@ jobs:
           version: ${{steps.project-new-version.outputs.newversion}}-RC-
       
       - name: Display next release candidate version
-        run: echo ${{steps.next-rc-numbner.outputs.next-rc-number}}
+        run: echo ${{steps.next-rc-numbner.outputs.next-tag-number}}
 
       - name: Get last commit sha
         id: sha
