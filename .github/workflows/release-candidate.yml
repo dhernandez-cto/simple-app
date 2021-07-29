@@ -41,6 +41,7 @@ jobs:
           mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
           cat pom.xml | grep ${{steps.project-new-version.outputs.newversion}}
         
+      # hacer que este commit esté verificado
       - name: Commiting pom.xml
         run: |
           git config user.name github-actions
