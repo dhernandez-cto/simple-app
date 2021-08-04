@@ -17,7 +17,15 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        
+
+      - name: debug
+        run: |
+          pwd
+          ls -la .
+          ls -la .github
+          ls -la .github/actions
+
+          
       - name: Private Action Loader
         uses: actions/checkout@v2
         with:
@@ -28,6 +36,10 @@ jobs:
           ref: 'e268df0f68f566e78754db71ea8eaaa0683040db'
           path: '.github/actions/'
 
+      - name: debug
+        run: |
+          ls -la .github/actions
+          
       - name: Extract Maven project version
         id: project-version
         run: echo ::set-output name=version::$(./mvnw -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec)
