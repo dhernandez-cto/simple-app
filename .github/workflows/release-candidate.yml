@@ -19,12 +19,14 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Private Action Loader
-        uses: nick-invision/private-action-loader@6fa713597d3de3707f8b7a3029a5c262f32c5bca
+        uses: actions/checkout@v2
         with:
           # Access token with read access to the repo containing action
-          pal-repo-token: ${{secrets.PAT}}
+          token: ${{secrets.PAT}}
           # The organization/user and repo where action is stored, with support for @ref
-          pal-repo-name: santander-group/git-tag-counter-action@e268df0f68f566e78754db71ea8eaaa0683040db
+          repository: santander-group/git-tag-counter-action
+          ref: 'e268df0f68f566e78754db71ea8eaaa0683040db'
+          path: '.github/actions/'
 
       - name: Extract Maven project version
         id: project-version
