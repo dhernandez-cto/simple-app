@@ -17,6 +17,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        
+      - name: Private Action Loader
+        uses: nick-invision/private-action-loader@6fa713597d3de3707f8b7a3029a5c262f32c5bca
+        with:
+          # Access token with read access to the repo containing action
+          pal-repo-token: ${{secrets.PAT}}
+          # The organization/user and repo where action is stored, with support for @ref
+          pal-repo-name: santander-group/git-tag-counter-action@e268df0f68f566e78754db71ea8eaaa0683040db
 
       - name: Extract Maven project version
         id: project-version
@@ -50,12 +58,15 @@ jobs:
 
       - name: Retrieving next RC number
         id: next-rc-number
-        uses: belcebus/git-tags-action@main
+        uses: ./.github/actions/git-tag-counter-action
         with:
           version: ${{steps.project-new-version.outputs.newversion}}-RC
       
       - name: Display next release candidate version
-        run: echo ${{steps.next-rc-number.outputs.new-tag}}
+        run: |
+          echo ${{ steps.next-rc-number.outputs.next-tag-number }}
+          echo ${{ steps.next-rc-number.outputs.new-tag }}
+        
 
       - name: Get last commit sha
         id: sha
