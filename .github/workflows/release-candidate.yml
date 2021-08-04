@@ -32,7 +32,7 @@ jobs:
           token: ${{secrets.PAT}}
           # The organization/user and repo where action is stored, with support for @ref
           repository: santander-group/git-tag-counter-action
-          ref: 'e268df0f68f566e78754db71ea8eaaa0683040db'
+          ref: 'feature/customize-template'
           path: '.github/actions/git-tag-counter-action'
 
       - name: debug
