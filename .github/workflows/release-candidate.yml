@@ -49,15 +49,6 @@ jobs:
         run: |
           mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
           cat pom.xml | grep ${{steps.project-new-version.outputs.newversion}}
-        
-      # hacer que este commit esté verificado
-      - name: Commiting pom.xml
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git commit -am '[GitHub Actions] removing -SNAPSHOT from pom.xml'
-          git push
-
       - name: Retrieving next RC number
         id: next-rc-number
         uses: ./.github/actions/git-tag-counter-action
@@ -68,7 +59,17 @@ jobs:
         run: |
           echo ${{ steps.next-rc-number.outputs.next-tag-number }}
           echo ${{ steps.next-rc-number.outputs.new-tag }}
-        
+      
+      - name: deleting local actions.
+        run: rm -rf .github/actions/
+          
+      # hacer que este commit esté verificado
+      - name: Commiting pom.xml
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git commit -am '[GitHub Actions] removing -SNAPSHOT from pom.xml'
+          git push
 
       - name: Get last commit sha
         id: sha
