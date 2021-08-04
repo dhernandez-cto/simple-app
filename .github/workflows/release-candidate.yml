@@ -49,6 +49,15 @@ jobs:
         run: |
           mvn -q -Dexec.executable=echo -Dexec.args='${project.version}' --non-recursive exec:exec
           cat pom.xml | grep ${{steps.project-new-version.outputs.newversion}}
+
+      - name: debug
+        run: |
+          pwd
+          ls -la .
+          ls -la .github
+          ls -la .github/actions
+          ls -la .github/actions/git-tag-counter-action
+          
       - name: Retrieving next RC number
         id: next-rc-number
         uses: ./.github/actions/git-tag-counter-action
