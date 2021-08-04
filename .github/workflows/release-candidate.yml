@@ -23,8 +23,6 @@ jobs:
           pwd
           ls -la .
           ls -la .github
-          ls -la .github/actions
-
           
       - name: Private Action Loader
         uses: actions/checkout@v2
@@ -39,6 +37,7 @@ jobs:
       - name: debug
         run: |
           ls -la .github/actions
+          ls -la ./.github/actions/git-tag-counter-action
           
       - name: Extract Maven project version
         id: project-version
